@@ -71,14 +71,14 @@ function addRole() {
                 type: "input",
                 name: "salary",
                 message: "Please enter the salary for this position:",
-                // validate: (salaryInput) => {
-                //     if (salaryInput) {
-                //         return true;
-                //     } else {
-                //         console.log("A salary must be provided before you can continue.");
-                //         return false;
-                //     }
-                // },
+                validate: (salaryInput) => {
+                    if (salaryInput) {
+                        return true;
+                    } else {
+                        console.log("A salary must be provided before you can continue.");
+                        return false;
+                    }
+                },
             },
             {
                 type: "list",
