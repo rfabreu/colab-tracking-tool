@@ -271,5 +271,5 @@ userPrompts();
 
 
 // Credits: code based on module lessons project work.
-// Assisted by TA: Sachin Jhaveri
+// Assisted by Sachin Jhaveri (TA) and Sean New (Tutor)
 // University of Toronto coding Bootcamp
