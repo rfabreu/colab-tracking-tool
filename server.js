@@ -45,45 +45,53 @@ function addDepartment() {
 };
 
 function addRole() {
-    const depNames = Database.getDepartmentNames();
-    // console.log(depNames);
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "title",
-            message: "Enter the title for the role you are adding:",
-            validate: (titleInput) => {
-                if (titleInput) {
-                    return true;
-                } else {
-                    console.log(
-                        "A role must receive a title before you can continue.");
-                    return false;
-                }
+    Database.getDepartmentNames()
+    .then(depNames => {
+        console.log(depNames);
+        const departments = depNames.departmentNames.map(department => {
+            return {name: department.name, value: department.id}
+        })
+        console.log(departments);
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "title",
+                message: "Enter the title for the role you are adding:",
+                validate: (titleInput) => {
+                    if (titleInput) {
+                        return true;
+                    } else {
+                        console.log(
+                            "A role must receive a title before you can continue.");
+                        return false;
+                    }
+                },
             },
-        },
-        {
-            type: "input",
-            name: "salary",
-            message: "Please enter the salary for this position:",
-            validate: (salaryInput) => {
-                if (salaryInput) {
-                    return true;
-                } else {
-                    console.log("A salary must be provided before you can continue.");
-                    return false;
-                }
+            {
+                type: "input",
+                name: "salary",
+                message: "Please enter the salary for this position:",
+                // validate: (salaryInput) => {
+                //     if (salaryInput) {
+                //         return true;
+                //     } else {
+                //         console.log("A salary must be provided before you can continue.");
+                //         return false;
+                //     }
+                // },
             },
-        },
-        {
-            type: "list",
-            name: "department_option",
-            message: "Select the department to which the new role belongs:",
-            choices: depNames
-        }
-    ]).then(data => {
-        Database.addRoleQuery(data.title, data.salary, data.departmentId)
-        userPrompts();
+            {
+                type: "list",
+                name: "department_id",
+                message: "Select the department to which the new role belongs:",
+                choices: departments
+            }
+        ]).then(data => {
+            console.log(data);
+            Database.addRoleQuery(data.title, data.salary, data.department_id)
+            userPrompts();
+        })
+    
     })
 };
 
