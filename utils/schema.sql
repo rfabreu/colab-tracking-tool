@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS departments;
 
--- Ensure to keep the table order, itmust first declare tables that have their primary key referenced for another table's foreign key 
 CREATE TABLE departments (
   id INTEGER AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NOT NULL

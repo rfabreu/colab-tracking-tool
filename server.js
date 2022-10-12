@@ -26,13 +26,13 @@ function addDepartment() {
         {
             type: "input",
             name: "name",
-            message: "Enter the name of the department you want to add.",
+            message: "Enter a name for the new department:",
             validate: (departmentInput) => {
                 if (departmentInput) {
                     return true;
                 } else {
                     console.log(
-                        "You must provide the name of the department before continuing."
+                        "A new department must receive a name before you can continue."
                     );
                     return false;
                 }
@@ -46,17 +46,18 @@ function addDepartment() {
 
 function addRole() {
     const depNames = Database.getDepartmentNames();
+    // console.log(depNames);
     inquirer.prompt([
         {
             type: "input",
             name: "title",
-            message: "Enter the title for the role you are adding.",
+            message: "Enter the title for the role you are adding:",
             validate: (titleInput) => {
                 if (titleInput) {
                     return true;
                 } else {
                     console.log(
-                        "You must provide a title for the role before continuing.");
+                        "A role must receive a title before you can continue.");
                     return false;
                 }
             },
@@ -64,12 +65,12 @@ function addRole() {
         {
             type: "input",
             name: "salary",
-            message: "Please enter the salary for this position.",
+            message: "Please enter the salary for this position:",
             validate: (salaryInput) => {
                 if (salaryInput) {
                     return true;
                 } else {
-                    console.log("You must enter the salary of this role before proceeding.");
+                    console.log("A salary must be provided before you can continue.");
                     return false;
                 }
             },
@@ -77,7 +78,7 @@ function addRole() {
         {
             type: "list",
             name: "department_option",
-            message: "Select the department to which the new role belongs.",
+            message: "Select the department to which the new role belongs:",
             choices: depNames
         }
     ]).then(data => {
@@ -86,19 +87,19 @@ function addRole() {
     })
 };
 
-function addEmployee() {
+function addTeamMember() {
     inquirer.prompt([
         {
             type: "input",
             name: "first_name",
             message:
-                "Provide the first name of the employee you are adding.",
+                "Enter the first name of the member you are creating:",
             validate: (firstNameInput) => {
                 if (firstNameInput) {
                     return true;
                 } else {
                     console.log(
-                        "You must enter a valid first name for the employee you are adding before continuing."
+                        "You must enter a valid first name for the team member you are adding before continuing."
                     );
                     return false;
                 }
@@ -108,13 +109,13 @@ function addEmployee() {
             type: "input",
             name: "last_name",
             message:
-                "Provide the last name of the employee you are adding.",
+                "Enter the second name of the member you are creating:",
             validate: (lastNameInput) => {
                 if (lastNameInput) {
                     return true;
                 } else {
                     console.log(
-                        "You must enter a valid last name for the emloyee you are adding before continuing."
+                        "You must enter a valid last name for the team member you are adding before continuing."
                     );
                     return false;
                 }
@@ -123,19 +124,19 @@ function addEmployee() {
         {
             type: "list",
             name: "role_option",
-            message: "Select a role to assign to the new employee.",
+            message: "Select a role to assign to the new team member:",
             choices: Database.getRoleNames()
         },
         {
             type: "confirm",
             name: "confirmManager",
-            message: "Does this employee report to a manager?",
+            message: "Does this collaborator report to a manager?",
             default: false
         }
     ]).then(data => {
         Database.addNewEmployeeQuery(data.first_name, data.last_name, data.role_option);
         if (confirmManager) {
-            addEmployeeManager();
+            addMemberManager();
         }
         else {
             userPrompts();
@@ -144,12 +145,12 @@ function addEmployee() {
     console.log(Database.getRoleNames());
 };
 
-function addEmployeeManager() {
+function addMemberManager() {
     inquirer.prompt([
         {
             type: "list",
             name: "employee_option",
-            message: "Select the name of the manager the new employee will report to.",
+            message: "Select the manager the new team member will report to:",
             choices: Database.getEmployeeNames()
         }
     ]).then(data => {
@@ -163,13 +164,13 @@ function updateEmployee() {
         {
             type: "list",
             name: "employee_option",
-            message: "Select the name of the collaborator you are updating.",
+            message: "Select the name of the collaborator you are updating:",
             choices: Database.getEmployeeNames()
         },
         {
             type: "list",
             name: "role_option",
-            message: "Select the new role for this collaborator.",
+            message: "Select the new role for this person:",
             choices: Database.getRoleNames()
         }
     ]).then(data => {
@@ -178,12 +179,12 @@ function updateEmployee() {
     })
 };
 
-function showEmployeesbyManager() {
+function viewMembersbyManager() {
     inquirer.prompt([
         {
             type: "list",
             name: "manager_option",
-            message: "Select a manager to view the collaborators they oversee.",
+            message: "Choose a manager to view the collaborators they oversee:",
             choices: Database.getManagerNames()
         }
     ]).then(data => {
@@ -201,42 +202,42 @@ function userPrompts() {
             name: "action",
             message: "Select from the following actions:",
             choices: [
-                "View Departments",
-                "Add Department",
-                "View Roles",
-                "Add Role",
-                "View Employees",
-                "Add Employee",
-                "Update Employee Role",
-                "Sort Employees by Manager"
+                "Show Departments",
+                "Create Department",
+                "Show Roles",
+                "Create Role",
+                "Show Team Members",
+                "Add New Team Member",
+                "Update Collaborator's Role",
+                "Sort Team Members by Manager"
             ],
         }
     ]).then((answers) => {
         console.log(answers.action);
         switch (answers.action) {
-            case "View Departments":
+            case "Show Departments":
                 viewDep();
                 break;
-            case "Add Department":
+            case "Create Department":
                 addDepartment();
                 break;
-            case "View Roles":
+            case "Show Roles":
                 viewRoles();
                 break;
-            case "Add Role":
+            case "Create Role":
                 addRole();
                 break;
-            case "View Employees":
+            case "Show Team Members":
                 viewCollaborators();
                 break;
-            case "Add Employee":
-                addEmployee();
+            case "Add New Team Member":
+                addTeamMember();
                 break;
-            case "Update Employee Role":
+            case "Update Collaborator's Role":
                 updateEmployee();
                 break;
-            case "Sort Employees by Manager":
-                showEmployeesbyManager();
+            case "Sort Team Members by Manager":
+                viewMembersbyManager();
                 break;
             default: return;
         }
