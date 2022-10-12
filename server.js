@@ -112,32 +112,32 @@ function addTeamMember() {
                     name: "first_name",
                     message:
                         "Enter the first name of the member you are creating:",
-                    // validate: (firstNameInput) => {
-                    //     if (firstNameInput) {
-                    //         return true;
-                    //     } else {
-                    //         console.log(
-                    //             "You must enter a valid first name for the team member you are adding before continuing."
-                    //         );
-                    //         return false;
-                    //     }
-                    // },
+                    validate: (first_nameInput) => {
+                        if (first_nameInput) {
+                            return true;
+                        } else {
+                            console.log(
+                                "You must enter a valid first name for the team member you are adding before continuing."
+                            );
+                            return false;
+                        }
+                    },
                 },
                 {
                     type: "input",
                     name: "last_name",
                     message:
                         "Enter the second name of the member you are creating:",
-                    // validate: (lastNameInput) => {
-                    //     if (lastNameInput) {
-                    //         return true;
-                    //     } else {
-                    //         console.log(
-                    //             "You must enter a valid last name for the team member you are adding before continuing."
-                    //         );
-                    //         return false;
-                    //     }
-                    // },
+                    validate: (last_nameInput) => {
+                        if (last_nameInput) {
+                            return true;
+                        } else {
+                            console.log(
+                                "You must enter a valid last name for the team member you are adding before continuing."
+                            );
+                            return false;
+                        }
+                    },
                 },
                 {
                     type: "list",
@@ -160,7 +160,7 @@ function addTeamMember() {
                 //     userPrompts();
                 // }
                 userPrompts();
-                console.log(Database.getRoleNames());           
+                // console.log(Database.getRoleNames());           
             })
         
         })
