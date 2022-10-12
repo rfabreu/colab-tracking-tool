@@ -42,7 +42,7 @@ EmployeeTracking is a CMS App that enables management of a company's employees d
         • Run "npm i" or "npm install" to install the required packages
         • Run "mysql -u root -p" and enter your credentials when/if prompted
         • Then run "source db/db.sql;"
-        • Run "node index" or "node index.js" to start the app and follow the prompts
+        • Run "node server" or "node server.js" to start the app and follow the prompts
 
 ## License
 
