@@ -96,61 +96,75 @@ function addRole() {
 };
 
 function addTeamMember() {
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "first_name",
-            message:
-                "Enter the first name of the member you are creating:",
-            // validate: (firstNameInput) => {
-            //     if (firstNameInput) {
-            //         return true;
-            //     } else {
-            //         console.log(
-            //             "You must enter a valid first name for the team member you are adding before continuing."
-            //         );
-            //         return false;
-            //     }
-            // },
-        },
-        {
-            type: "input",
-            name: "last_name",
-            message:
-                "Enter the second name of the member you are creating:",
-            // validate: (lastNameInput) => {
-            //     if (lastNameInput) {
-            //         return true;
-            //     } else {
-            //         console.log(
-            //             "You must enter a valid last name for the team member you are adding before continuing."
-            //         );
-            //         return false;
-            //     }
-            // },
-        },
-        {
-            type: "list",
-            name: "role_option",
-            message: "Select a role to assign to the new team member:",
-            choices: Database.getRoleNames()
-        },
-        {
-            type: "confirm",
-            name: "confirmManager",
-            message: "Does this collaborator report to a manager?",
-            default: false
-        }
-    ]).then(data => {
-        Database.addNewEmployeeQuery(data.first_name, data.last_name, data.role_option);
-        if (confirmManager) {
-            addMemberManager();
-        }
-        else {
-            userPrompts();
-        }
+    Database.getRoles()
+    .then(newMemberRole => {
+        console.log(newMemberRole);
+        Database.getEmployeesInfo()
+        .then(employeeInfo => {
+            console.log(employeeInfo);
+            const roles = newMemberRole.roles.map(role => {
+                return {name: role.title, value: role.id}
+            })
+            console.log(roles);
+            inquirer.prompt([
+                {
+                    type: "input",
+                    name: "first_name",
+                    message:
+                        "Enter the first name of the member you are creating:",
+                    // validate: (firstNameInput) => {
+                    //     if (firstNameInput) {
+                    //         return true;
+                    //     } else {
+                    //         console.log(
+                    //             "You must enter a valid first name for the team member you are adding before continuing."
+                    //         );
+                    //         return false;
+                    //     }
+                    // },
+                },
+                {
+                    type: "input",
+                    name: "last_name",
+                    message:
+                        "Enter the second name of the member you are creating:",
+                    // validate: (lastNameInput) => {
+                    //     if (lastNameInput) {
+                    //         return true;
+                    //     } else {
+                    //         console.log(
+                    //             "You must enter a valid last name for the team member you are adding before continuing."
+                    //         );
+                    //         return false;
+                    //     }
+                    // },
+                },
+                {
+                    type: "list",
+                    name: "role_option",
+                    message: "Select a role to assign to the new team member:",
+                    choices: roles
+                },
+                {
+                    type: "confirm",
+                    name: "confirmManager",
+                    message: "Does this collaborator report to a manager?",
+                    default: false
+                }
+            ]).then(data => {
+                Database.addNewEmployeeQuery(data.first_name, data.last_name, data.role_option);
+                // if (confirmManager) {
+                //     addMemberManager();
+                // }
+                // else {
+                //     userPrompts();
+                // }
+                userPrompts();
+                console.log(Database.getRoleNames());           
+            })
+        
+        })
     })
-    console.log(Database.getRoleNames());
 };
 
 function addMemberManager() {
