@@ -102,32 +102,32 @@ function addTeamMember() {
             name: "first_name",
             message:
                 "Enter the first name of the member you are creating:",
-            validate: (firstNameInput) => {
-                if (firstNameInput) {
-                    return true;
-                } else {
-                    console.log(
-                        "You must enter a valid first name for the team member you are adding before continuing."
-                    );
-                    return false;
-                }
-            },
+            // validate: (firstNameInput) => {
+            //     if (firstNameInput) {
+            //         return true;
+            //     } else {
+            //         console.log(
+            //             "You must enter a valid first name for the team member you are adding before continuing."
+            //         );
+            //         return false;
+            //     }
+            // },
         },
         {
             type: "input",
             name: "last_name",
             message:
                 "Enter the second name of the member you are creating:",
-            validate: (lastNameInput) => {
-                if (lastNameInput) {
-                    return true;
-                } else {
-                    console.log(
-                        "You must enter a valid last name for the team member you are adding before continuing."
-                    );
-                    return false;
-                }
-            },
+            // validate: (lastNameInput) => {
+            //     if (lastNameInput) {
+            //         return true;
+            //     } else {
+            //         console.log(
+            //             "You must enter a valid last name for the team member you are adding before continuing."
+            //         );
+            //         return false;
+            //     }
+            // },
         },
         {
             type: "list",
